@@ -1,0 +1,126 @@
+{
+  "info": {
+    "name": "WorkOrderHub API",
+    "_postman_id": "a9f94436-85cf-4968-9f86-83d9fa08f121",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Unauthorized List (401)",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{baseUrl}}/api/workorders"
+      }
+    },
+    {
+      "name": "Create Work Order (Valid)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"title\": \"Replace damaged keyboard\",\n  \"description\": \"Keyboard keys are missing and not functional\",\n  \"department\": \"IT\",\n  \"priority\": \"MEDIUM\",\n  \"requesterName\": \"Aman\",\n  \"assignee\": \"Nina\"\n}"
+        },
+        "url": "{{baseUrl}}/api/workorders"
+      }
+    },
+    {
+      "name": "Create Work Order (Invalid -> 400)",
+      "request": {
+        "method": "POST",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"title\": \"abc\"\n}" },
+        "url": "{{baseUrl}}/api/workorders"
+      }
+    },
+    {
+      "name": "List Work Orders (Filters + Pagination)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "x-api-key", "value": "{{apiKey}}" }],
+        "url": "{{baseUrl}}/api/workorders?status=NEW&page=1&limit=10&q=Replace"
+      }
+    },
+    {
+      "name": "Status Transition (Valid)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"status\": \"IN_PROGRESS\"\n}" },
+        "url": "{{baseUrl}}/api/workorders/{{workOrderId}}/status"
+      }
+    },
+    {
+      "name": "Status Transition (Invalid -> 409)",
+      "request": {
+        "method": "PATCH",
+        "header": [
+          { "key": "x-api-key", "value": "{{apiKey}}" },
+          { "key": "Content-Type", "value": "application/json" }
+        ],
+        "body": { "mode": "raw", "raw": "{\n  \"status\": \"DONE\"\n}" },
+        "url": "{{baseUrl}}/api/workorders/{{newWorkOrderId}}/status"
+      }
+    },
+    {
+      "name": "Bulk Upload (Valid CSV)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "x-api-key", "value": "{{apiKey}}" }],
+        "body": {
+          "mode": "formdata",
+          "formdata": [{ "key": "file", "type": "file", "src": "templates/workorders.csv" }]
+        },
+        "url": "{{baseUrl}}/api/workorders/data-transfer"
+      }
+    },
+    {
+      "name": "Bulk Upload (Invalid Rows)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "x-api-key", "value": "{{apiKey}}" }],
+        "body": {
+          "mode": "formdata",
+          "formdata": [{ "key": "file", "type": "file", "src": "templates/workorders-invalid.csv" }]
+        },
+        "url": "{{baseUrl}}/api/workorders/data-transfer"
+      }
+    },
+    {
+      "name": "Bulk Upload (Wrong Type -> 415)",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "x-api-key", "value": "{{apiKey}}" }],
+        "body": {
+          "mode": "formdata",
+          "formdata": [{ "key": "file", "type": "file", "src": "README.md" }]
+        },
+        "url": "{{baseUrl}}/api/workorders/data-transfer"
+      }
+    }
+  ],
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:3001" },
+    { "key": "apiKey", "value": "change_me" },
+    { "key": "workOrderId", "value": "" },
+    { "key": "newWorkOrderId", "value": "" }
+  ]
+}

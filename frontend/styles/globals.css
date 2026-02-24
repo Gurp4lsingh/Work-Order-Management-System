@@ -1,0 +1,165 @@
+:root {
+  --bg: #f3efe4;
+  --panel: #fffaf0;
+  --ink: #1e1e1e;
+  --brand: #005f73;
+  --accent: #ca6702;
+  --danger: #b00020;
+  --line: #d8ccb5;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Segoe UI", "Trebuchet MS", sans-serif;
+  color: var(--ink);
+  background: radial-gradient(circle at top left, #faedcd 0%, var(--bg) 60%);
+}
+
+.app-shell {
+  display: grid;
+  grid-template-columns: 250px 1fr;
+  min-height: 100vh;
+}
+
+.sidebar {
+  padding: 20px;
+  background: linear-gradient(180deg, #0a9396 0%, #005f73 100%);
+  color: #fff;
+}
+
+.sidebar h1 {
+  margin-top: 0;
+  font-size: 1.4rem;
+}
+
+.nav-link {
+  display: block;
+  padding: 10px 12px;
+  margin-bottom: 6px;
+  border-radius: 8px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.nav-link.active,
+.nav-link:hover {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.content {
+  padding: 16px 24px;
+}
+
+.topbar {
+  border-bottom: 1px solid var(--line);
+  margin-bottom: 18px;
+}
+
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 12px;
+}
+
+.card,
+.panel {
+  background: var(--panel);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px;
+}
+
+.mini-row,
+.row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  justify-content: space-between;
+  margin: 6px 0;
+}
+
+.filter-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.table th,
+.table td {
+  text-align: left;
+  border: 1px solid var(--line);
+  padding: 8px;
+  font-size: 0.9rem;
+}
+
+.form {
+  display: grid;
+  gap: 10px;
+}
+
+label {
+  display: grid;
+  gap: 4px;
+}
+
+input,
+textarea,
+select,
+button {
+  padding: 8px;
+  border-radius: 6px;
+  border: 1px solid #bbb;
+}
+
+button {
+  background: var(--brand);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.danger {
+  background: var(--danger);
+}
+
+.error-banner {
+  background: #ffe5e5;
+  border: 1px solid #ffb3b3;
+  color: #7a0000;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 8px 0 12px;
+}
+
+.inline-error {
+  color: #8b0000;
+  margin: 0;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .app-shell {
+    grid-template-columns: 1fr;
+  }
+  .sidebar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+  }
+}
